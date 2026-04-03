@@ -1,0 +1,112 @@
+[
+  {
+    "id": "village_001",
+    "name": "Rampur",
+    "state": "Maharashtra",
+    "region": "rural_maharashtra",
+    "population": 1200,
+    "active_outbreaks": [],
+    "recent_cases": ["malaria", "malaria", "dengue"],
+    "water_source": "well",
+    "sanitation": "low"
+  },
+  {
+    "id": "village_002",
+    "name": "Chandapur",
+    "state": "Maharashtra",
+    "region": "rural_maharashtra",
+    "population": 850,
+    "active_outbreaks": ["dengue"],
+    "recent_cases": ["dengue", "dengue", "diarrhoea"],
+    "water_source": "river",
+    "sanitation": "low"
+  },
+  {
+    "id": "village_003",
+    "name": "Kolwadi",
+    "state": "Maharashtra",
+    "region": "rural_maharashtra",
+    "population": 2100,
+    "active_outbreaks": [],
+    "recent_cases": ["typhoid", "diarrhoea"],
+    "water_source": "handpump",
+    "sanitation": "medium"
+  },
+  {
+    "id": "village_004",
+    "name": "Biharsharif",
+    "state": "Bihar",
+    "region": "rural_bihar",
+    "population": 3200,
+    "active_outbreaks": ["malaria"],
+    "recent_cases": ["malaria", "malaria", "malaria", "anaemia"],
+    "water_source": "pond",
+    "sanitation": "low"
+  },
+  {
+    "id": "village_005",
+    "name": "Darbhanga Tola",
+    "state": "Bihar",
+    "region": "rural_bihar",
+    "population": 900,
+    "active_outbreaks": [],
+    "recent_cases": ["diarrhoea", "worm_infestation"],
+    "water_source": "well",
+    "sanitation": "low"
+  },
+  {
+    "id": "village_006",
+    "name": "Munger Gaon",
+    "state": "Bihar",
+    "region": "rural_bihar",
+    "population": 1500,
+    "active_outbreaks": [],
+    "recent_cases": ["anaemia", "malnutrition", "anaemia"],
+    "water_source": "handpump",
+    "sanitation": "medium"
+  },
+  {
+    "id": "village_007",
+    "name": "Azamgarh Khurd",
+    "state": "Uttar Pradesh",
+    "region": "rural_up",
+    "population": 1800,
+    "active_outbreaks": [],
+    "recent_cases": ["tuberculosis", "ari"],
+    "water_source": "well",
+    "sanitation": "low"
+  },
+  {
+    "id": "village_008",
+    "name": "Sultanpur Tanda",
+    "state": "Uttar Pradesh",
+    "region": "rural_up",
+    "population": 2500,
+    "active_outbreaks": ["diarrhoea"],
+    "recent_cases": ["diarrhoea", "diarrhoea", "typhoid"],
+    "water_source": "river",
+    "sanitation": "low"
+  },
+  {
+    "id": "village_009",
+    "name": "Pratapgarh Nagar",
+    "state": "Uttar Pradesh",
+    "region": "rural_up",
+    "population": 1100,
+    "active_outbreaks": [],
+    "recent_cases": ["hypertension", "diabetes"],
+    "water_source": "handpump",
+    "sanitation": "medium"
+  },
+  {
+    "id": "village_010",
+    "name": "Jaunpur Khas",
+    "state": "Uttar Pradesh",
+    "region": "rural_up",
+    "population": 1400,
+    "active_outbreaks": [],
+    "recent_cases": ["ari", "pneumonia", "ari"],
+    "water_source": "well",
+    "sanitation": "medium"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "medicines": [
+    "ors",
+    "iron_tablets",
+    "ocp",
+    "chloroquine",
+    "paracetamol",
+    "zinc",
+    "albendazole"
+  ],
+  "tests": [
+    "malaria_rdt",
+    "haemoglobin_strip",
+    "urine_dipstick",
+    "bp_monitor",
+    "thermometer"
+  ],
+  "supplies": [
+    "gloves",
+    "mask",
+    "sanitizer"
+  ]
+}
