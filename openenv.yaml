@@ -1,0 +1,38 @@
+name: asha-agent-env
+version: 1.0.0
+description: >
+  RL environment simulating ASHA worker patient consultations
+  in rural India. Agent must diagnose and refer patients using
+  a limited medical kit under realistic constraints.
+
+tasks:
+  - id: easy_diagnosis
+    name: Easy Diagnosis
+    description: 5 diseases, clean symptoms, diagnosis only
+    grader: graders.composite_grader.CompositeGrader
+    max_steps: 5
+
+  - id: medium_consultation
+    name: Medium Consultation
+    description: 10 diseases, partial observability, must ask questions
+    grader: graders.composite_grader.CompositeGrader
+    max_steps: 12
+
+  - id: hard_complex_case
+    name: Hard Complex Case
+    description: 15+ diseases, comorbidities, emergencies, non-compliance
+    grader: graders.composite_grader.CompositeGrader
+    max_steps: 20
+
+action_space:
+  type: discrete_text
+  description: Action strings from available_actions list in observation
+
+observation_space:
+  type: json
+  description: LLM-readable patient state with available actions
+
+endpoints:
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
