@@ -1,23 +1,24 @@
 {
   "medicines": [
+    "ifa_tablets",
+    "calcium_tablets",
     "ors",
-    "iron_tablets",
-    "ocp",
-    "chloroquine",
-    "paracetamol",
     "zinc",
-    "albendazole"
+    "paracetamol",
+    "misoprostol"
   ],
   "tests": [
-    "malaria_rdt",
+    "bp_monitor",
+    "thermometer",
     "haemoglobin_strip",
     "urine_dipstick",
-    "bp_monitor",
-    "thermometer"
+    "weighing_scale"
   ],
   "supplies": [
+    "clean_delivery_kit",
     "gloves",
-    "mask",
-    "sanitizer"
+    "cord_clamp",
+    "mucus_extractor",
+    "blanket"
   ]
 }

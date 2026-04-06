@@ -1,85 +1,13 @@
 [
   {
-    "id": "malaria",
-    "name": "Malaria",
-    "required_symptoms": ["fever", "chills", "sweating"],
-    "optional_symptoms": ["headache", "nausea", "joint_pain", "fatigue"],
-    "contraindicated_symptoms": ["rash", "jaundice"],
+    "id": "severe_anaemia",
+    "name": "Severe Anaemia in Pregnancy",
+    "required_symptoms": ["pallor", "fatigue", "weakness"],
+    "optional_symptoms": ["dizziness", "shortness_of_breath", "brittle_nails", "rapid_heartbeat"],
+    "contraindicated_symptoms": ["convulsions", "vaginal_bleeding"],
     "severity": "high",
     "treatable_with_kit": true,
-    "kit_treatment": ["chloroquine", "paracetamol"],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 3.0,
-      "winter": 1.0,
-      "summer": 1.5
-    },
-    "category": "infectious"
-  },
-  {
-    "id": "dengue",
-    "name": "Dengue",
-    "required_symptoms": ["fever", "headache", "joint_pain"],
-    "optional_symptoms": ["rash", "nausea", "fatigue", "bleeding_gums"],
-    "contraindicated_symptoms": ["chills", "productive_cough"],
-    "severity": "high",
-    "treatable_with_kit": false,
-    "kit_treatment": ["paracetamol"],
-    "referral_level": "district_hospital",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 3.5,
-      "winter": 0.5,
-      "summer": 1.0
-    },
-    "category": "infectious"
-  },
-  {
-    "id": "typhoid",
-    "name": "Typhoid",
-    "required_symptoms": ["fever", "abdominal_pain", "weakness"],
-    "optional_symptoms": ["headache", "loss_of_appetite", "constipation", "diarrhoea"],
-    "contraindicated_symptoms": ["rash", "joint_pain"],
-    "severity": "high",
-    "treatable_with_kit": false,
-    "kit_treatment": ["paracetamol"],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 2.5,
-      "winter": 1.0,
-      "summer": 2.0
-    },
-    "category": "infectious"
-  },
-  {
-    "id": "tuberculosis",
-    "name": "Tuberculosis",
-    "required_symptoms": ["persistent_cough", "weight_loss", "night_sweats"],
-    "optional_symptoms": ["fever", "fatigue", "chest_pain", "blood_in_sputum"],
-    "contraindicated_symptoms": ["rash", "diarrhoea"],
-    "severity": "high",
-    "treatable_with_kit": false,
-    "kit_treatment": [],
-    "referral_level": "district_hospital",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 1.5,
-      "winter": 2.0,
-      "summer": 1.5
-    },
-    "category": "infectious"
-  },
-  {
-    "id": "anaemia",
-    "name": "Anaemia",
-    "required_symptoms": ["fatigue", "pallor", "weakness"],
-    "optional_symptoms": ["dizziness", "shortness_of_breath", "brittle_nails", "headache"],
-    "contraindicated_symptoms": ["fever", "rash"],
-    "severity": "medium",
-    "treatable_with_kit": true,
-    "kit_treatment": ["iron_tablets"],
+    "kit_treatment": ["ifa_tablets"],
     "referral_level": "phc",
     "emergency": false,
     "seasonal_weights": {
@@ -87,158 +15,50 @@
       "winter": 1.5,
       "summer": 1.5
     },
-    "category": "nutritional"
-  },
-  {
-    "id": "pneumonia",
-    "name": "Pneumonia",
-    "required_symptoms": ["fever", "productive_cough", "shortness_of_breath"],
-    "optional_symptoms": ["chest_pain", "fatigue", "chills", "rapid_breathing"],
-    "contraindicated_symptoms": ["diarrhoea", "rash"],
-    "severity": "high",
-    "treatable_with_kit": false,
-    "kit_treatment": ["paracetamol"],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 1.5,
-      "winter": 3.0,
-      "summer": 1.0
-    },
-    "category": "respiratory"
-  },
-  {
-    "id": "diarrhoea",
-    "name": "Diarrhoea/Cholera",
-    "required_symptoms": ["diarrhoea", "dehydration", "abdominal_pain"],
-    "optional_symptoms": ["nausea", "vomiting", "fever", "weakness"],
-    "contraindicated_symptoms": ["persistent_cough", "rash"],
-    "severity": "medium",
-    "treatable_with_kit": true,
-    "kit_treatment": ["ors", "zinc"],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 3.0,
-      "winter": 1.0,
-      "summer": 2.0
-    },
-    "category": "gastrointestinal"
-  },
-  {
-    "id": "malnutrition",
-    "name": "Malnutrition",
-    "required_symptoms": ["weight_loss", "weakness", "fatigue"],
-    "optional_symptoms": ["pallor", "hair_changes", "skin_changes", "loss_of_appetite"],
-    "contraindicated_symptoms": ["fever", "productive_cough"],
-    "severity": "medium",
-    "treatable_with_kit": true,
-    "kit_treatment": ["iron_tablets", "zinc"],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 1.5,
-      "winter": 1.5,
-      "summer": 2.0
-    },
-    "category": "nutritional"
-  },
-  {
-    "id": "hypertension",
-    "name": "Hypertension",
-    "required_symptoms": ["high_bp", "headache"],
-    "optional_symptoms": ["dizziness", "blurred_vision", "chest_pain", "shortness_of_breath"],
-    "contraindicated_symptoms": ["diarrhoea", "rash"],
-    "severity": "high",
-    "treatable_with_kit": false,
-    "kit_treatment": [],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 1.0,
-      "winter": 1.5,
-      "summer": 1.0
-    },
-    "category": "chronic"
-  },
-  {
-    "id": "diabetes",
-    "name": "Diabetes",
-    "required_symptoms": ["frequent_urination", "excessive_thirst", "weight_loss"],
-    "optional_symptoms": ["fatigue", "blurred_vision", "slow_healing", "numbness"],
-    "contraindicated_symptoms": ["rash", "productive_cough"],
-    "severity": "high",
-    "treatable_with_kit": false,
-    "kit_treatment": [],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 1.0,
-      "winter": 1.0,
-      "summer": 1.0
-    },
-    "category": "chronic"
-  },
-  {
-    "id": "chickenpox",
-    "name": "Chickenpox",
-    "required_symptoms": ["rash", "fever", "itching"],
-    "optional_symptoms": ["fatigue", "headache", "loss_of_appetite"],
-    "contraindicated_symptoms": ["diarrhoea", "persistent_cough"],
-    "severity": "medium",
-    "treatable_with_kit": false,
-    "kit_treatment": ["paracetamol"],
-    "referral_level": "phc",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 1.0,
-      "winter": 2.5,
-      "summer": 2.0
-    },
-    "category": "infectious"
-  },
-  {
-    "id": "jaundice",
-    "name": "Jaundice/Hepatitis",
-    "required_symptoms": ["jaundice", "fatigue", "loss_of_appetite"],
-    "optional_symptoms": ["abdominal_pain", "nausea", "dark_urine", "fever"],
-    "contraindicated_symptoms": ["rash", "productive_cough"],
-    "severity": "high",
-    "treatable_with_kit": false,
-    "kit_treatment": [],
-    "referral_level": "district_hospital",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 2.0,
-      "winter": 1.0,
-      "summer": 1.5
-    },
-    "category": "gastrointestinal"
-  },
-  {
-    "id": "worm_infestation",
-    "name": "Worm Infestation",
-    "required_symptoms": ["abdominal_pain", "loss_of_appetite", "weight_loss"],
-    "optional_symptoms": ["diarrhoea", "fatigue", "itching_anus", "visible_worms"],
-    "contraindicated_symptoms": ["fever", "rash"],
-    "severity": "low",
-    "treatable_with_kit": true,
-    "kit_treatment": ["albendazole"],
-    "referral_level": "none",
-    "emergency": false,
-    "seasonal_weights": {
-      "monsoon": 2.5,
-      "winter": 1.0,
-      "summer": 1.5
-    },
-    "category": "parasitic"
+    "category": "maternal"
   },
   {
     "id": "pre_eclampsia",
     "name": "Pre-eclampsia",
-    "required_symptoms": ["high_bp", "swelling", "headache"],
-    "optional_symptoms": ["blurred_vision", "abdominal_pain", "nausea", "rapid_weight_gain"],
-    "contraindicated_symptoms": ["diarrhoea", "persistent_cough"],
+    "required_symptoms": ["high_bp", "swelling_face_hands", "severe_headache"],
+    "optional_symptoms": ["blurred_vision", "upper_abdominal_pain", "nausea", "rapid_weight_gain"],
+    "contraindicated_symptoms": ["vaginal_bleeding", "foul_smelling_discharge"],
+    "severity": "critical",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "district_hospital",
+    "emergency": true,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.2,
+      "summer": 1.0
+    },
+    "category": "maternal"
+  },
+  {
+    "id": "eclampsia",
+    "name": "Eclampsia",
+    "required_symptoms": ["convulsions", "high_bp", "unconsciousness"],
+    "optional_symptoms": ["severe_headache", "blurred_vision", "swelling_face_hands"],
+    "contraindicated_symptoms": ["foul_smelling_discharge"],
+    "severity": "critical",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "district_hospital",
+    "emergency": true,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.2,
+      "summer": 1.0
+    },
+    "category": "maternal"
+  },
+  {
+    "id": "antepartum_haemorrhage",
+    "name": "Antepartum Haemorrhage",
+    "required_symptoms": ["vaginal_bleeding", "abdominal_pain"],
+    "optional_symptoms": ["dizziness", "weakness", "rapid_heartbeat", "pallor"],
+    "contraindicated_symptoms": ["fever", "foul_smelling_discharge"],
     "severity": "critical",
     "treatable_with_kit": false,
     "kit_treatment": [],
@@ -252,21 +72,201 @@
     "category": "maternal"
   },
   {
-    "id": "ari",
-    "name": "Acute Respiratory Infection",
-    "required_symptoms": ["cough", "fever", "runny_nose"],
-    "optional_symptoms": ["sore_throat", "headache", "fatigue", "sneezing"],
-    "contraindicated_symptoms": ["diarrhoea", "jaundice"],
-    "severity": "low",
+    "id": "postpartum_haemorrhage",
+    "name": "Postpartum Haemorrhage",
+    "required_symptoms": ["vaginal_bleeding", "weakness", "rapid_heartbeat"],
+    "optional_symptoms": ["dizziness", "pallor", "unconsciousness", "cold_clammy_skin"],
+    "contraindicated_symptoms": ["convulsions"],
+    "severity": "critical",
     "treatable_with_kit": true,
+    "kit_treatment": ["misoprostol"],
+    "referral_level": "district_hospital",
+    "emergency": true,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.0,
+      "summer": 1.0
+    },
+    "category": "maternal"
+  },
+  {
+    "id": "puerperal_sepsis",
+    "name": "Puerperal Sepsis",
+    "required_symptoms": ["fever", "foul_smelling_discharge", "lower_abdominal_pain"],
+    "optional_symptoms": ["chills", "weakness", "rapid_heartbeat", "tender_uterus"],
+    "contraindicated_symptoms": ["vaginal_bleeding", "convulsions"],
+    "severity": "high",
+    "treatable_with_kit": false,
     "kit_treatment": ["paracetamol"],
-    "referral_level": "none",
+    "referral_level": "phc",
     "emergency": false,
     "seasonal_weights": {
       "monsoon": 1.5,
-      "winter": 3.0,
+      "winter": 1.0,
+      "summer": 1.2
+    },
+    "category": "maternal"
+  },
+  {
+    "id": "gestational_diabetes",
+    "name": "Gestational Diabetes",
+    "required_symptoms": ["frequent_urination", "excessive_thirst", "fatigue"],
+    "optional_symptoms": ["blurred_vision", "nausea", "recurrent_infections", "rapid_weight_gain"],
+    "contraindicated_symptoms": ["vaginal_bleeding", "convulsions"],
+    "severity": "high",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "phc",
+    "emergency": false,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.0,
       "summer": 1.0
     },
-    "category": "respiratory"
+    "category": "maternal"
+  },
+  {
+    "id": "hyperemesis",
+    "name": "Hyperemesis Gravidarum",
+    "required_symptoms": ["excessive_vomiting", "dehydration", "weight_loss"],
+    "optional_symptoms": ["nausea", "fatigue", "dizziness", "inability_to_eat"],
+    "contraindicated_symptoms": ["vaginal_bleeding", "fever"],
+    "severity": "medium",
+    "treatable_with_kit": true,
+    "kit_treatment": ["ors"],
+    "referral_level": "phc",
+    "emergency": false,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.0,
+      "summer": 1.2
+    },
+    "category": "maternal"
+  },
+  {
+    "id": "preterm_labour",
+    "name": "Preterm Labour",
+    "required_symptoms": ["contractions_before_37wks", "lower_back_pain", "pelvic_pressure"],
+    "optional_symptoms": ["leaking_fluid", "vaginal_bleeding", "abdominal_cramps"],
+    "contraindicated_symptoms": ["foul_smelling_discharge"],
+    "severity": "critical",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "district_hospital",
+    "emergency": true,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.0,
+      "summer": 1.0
+    },
+    "category": "maternal"
+  },
+  {
+    "id": "obstructed_labour",
+    "name": "Obstructed Labour",
+    "required_symptoms": ["prolonged_labour", "severe_abdominal_pain", "maternal_distress"],
+    "optional_symptoms": ["vaginal_bleeding", "fever", "rapid_heartbeat", "swollen_vulva"],
+    "contraindicated_symptoms": [],
+    "severity": "critical",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "district_hospital",
+    "emergency": true,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.0,
+      "summer": 1.0
+    },
+    "category": "maternal"
+  },
+  {
+    "id": "birth_asphyxia",
+    "name": "Birth Asphyxia",
+    "required_symptoms": ["not_breathing", "not_crying", "blue_skin"],
+    "optional_symptoms": ["limp_body", "weak_cry", "slow_heartbeat_newborn"],
+    "contraindicated_symptoms": ["fever_newborn", "yellow_skin"],
+    "severity": "critical",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "district_hospital",
+    "emergency": true,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.0,
+      "summer": 1.0
+    },
+    "category": "newborn"
+  },
+  {
+    "id": "neonatal_sepsis",
+    "name": "Neonatal Sepsis",
+    "required_symptoms": ["fever_newborn", "poor_feeding", "lethargy_newborn"],
+    "optional_symptoms": ["fast_breathing_newborn", "umbilical_redness", "skin_pustules", "bulging_fontanelle"],
+    "contraindicated_symptoms": ["not_breathing", "yellow_skin"],
+    "severity": "critical",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "district_hospital",
+    "emergency": true,
+    "seasonal_weights": {
+      "monsoon": 1.5,
+      "winter": 1.2,
+      "summer": 1.0
+    },
+    "category": "newborn"
+  },
+  {
+    "id": "neonatal_jaundice",
+    "name": "Neonatal Jaundice",
+    "required_symptoms": ["yellow_skin", "yellow_eyes"],
+    "optional_symptoms": ["poor_feeding", "lethargy_newborn", "dark_urine_newborn"],
+    "contraindicated_symptoms": ["fever_newborn", "not_breathing"],
+    "severity": "medium",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "phc",
+    "emergency": false,
+    "seasonal_weights": {
+      "monsoon": 1.0,
+      "winter": 1.0,
+      "summer": 1.0
+    },
+    "category": "newborn"
+  },
+  {
+    "id": "low_birth_weight",
+    "name": "Low Birth Weight",
+    "required_symptoms": ["low_weight", "weak_cry", "poor_feeding"],
+    "optional_symptoms": ["hypothermia_sign", "lethargy_newborn", "difficulty_sucking"],
+    "contraindicated_symptoms": ["fever_newborn"],
+    "severity": "high",
+    "treatable_with_kit": true,
+    "kit_treatment": ["ors"],
+    "referral_level": "phc",
+    "emergency": false,
+    "seasonal_weights": {
+      "monsoon": 1.2,
+      "winter": 1.3,
+      "summer": 1.0
+    },
+    "category": "newborn"
+  },
+  {
+    "id": "hypothermia_newborn",
+    "name": "Neonatal Hypothermia",
+    "required_symptoms": ["hypothermia_sign", "cold_extremities", "lethargy_newborn"],
+    "optional_symptoms": ["poor_feeding", "weak_cry", "slow_heartbeat_newborn"],
+    "contraindicated_symptoms": ["fever_newborn"],
+    "severity": "high",
+    "treatable_with_kit": false,
+    "kit_treatment": [],
+    "referral_level": "phc",
+    "emergency": false,
+    "seasonal_weights": {
+      "monsoon": 0.5,
+      "winter": 3.0,
+      "summer": 0.5
+    },
+    "category": "newborn"
   }
 ]

@@ -1,3 +1,25 @@
+"""
+ASHA Environment — core RL (Reinforcement Learning) environment.
+
+Simulates a rural Indian ASHA (Accredited Social Health Activist) worker
+diagnosing and managing maternal and newborn health conditions.
+
+The agent (LLM or policy) interacts via a step-based loop:
+  1. reset(task_id) → generates a new patient episode and returns an observation.
+  2. step(action)   → processes one action, returns (observation, reward, done, info).
+
+Actions are strings like "ask_symptom:pallor", "diagnose:severe_anaemia",
+"treat:ifa_tablets", "refer:phc", etc.
+
+Rewards encourage:
+  - Asking relevant symptoms/history  (+small positive)
+  - Ordering useful tests              (+0.10)
+  - Correct diagnosis                  (+1.0)
+  - Correct referral level             (+0.8)
+  - Correct treatment                  (+0.2)
+Penalties apply for wrong/unnecessary actions, missed emergencies, etc.
+"""
+
 import json
 import os
 import random
@@ -9,35 +31,54 @@ from .tasks.easy_task import EasyTask
 from .tasks.medium_task import MediumTask
 from .tasks.hard_task import HardTask
 
+# Path to the JSON data files (diseases, symptoms, ASHA kit, villages)
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
+# Maps task_id strings (used in reset()) to their task configuration classes.
+# Each task class defines difficulty, allowed diseases, max steps, etc.
 TASK_MAP = {
     "easy_diagnosis": EasyTask,
     "medium_consultation": MediumTask,
     "hard_complex_case": HardTask,
 }
 
+# Ordered from least to most urgent. Used to score referral decisions —
+# under-referring an emergency is heavily penalized (-1.0).
 REFERRAL_LEVELS = ["none", "phc", "district_hospital", "emergency"]
 
 
 class AshaEnv:
+    """
+    Main environment class. One instance can run many episodes sequentially.
+
+    Lifecycle:
+        env = AshaEnv()
+        obs = env.reset("medium_consultation")   # start a new patient episode
+        while not done:
+            obs, reward, done, info = env.step("ask_symptom:pallor")
+        state = env.get_state()                   # ground-truth for grading
+    """
+
     def __init__(self):
         self._load_data()
-        self.episode_id = None
-        self.patient = None
-        self.task = None
-        self.step_count = 0
-        self.done = False
-        self.trajectory = []
-        self.asked_symptoms = []
-        self.asked_history = []
-        self.ordered_tests = []
-        self.diagnosis_made = None
-        self.referral_made = None
-        self.treatments_given = []
-        self.total_reward = 0.0
+
+        # --- Episode state (all reset on each reset() call) ---
+        self.episode_id = None          # Unique ID for the current episode
+        self.patient = None             # Dict holding all patient data (see generator.py)
+        self.task = None                # Task class (EasyTask / MediumTask / HardTask)
+        self.step_count = 0             # Number of actions taken so far
+        self.done = False               # Whether the episode has ended
+        self.trajectory = []            # Ordered list of all actions taken
+        self.asked_symptoms = []        # Symptom IDs already asked about
+        self.asked_history = []         # History items already asked about
+        self.ordered_tests = []         # Tests already ordered
+        self.diagnosis_made = None      # The disease_id the agent diagnosed (or None)
+        self.referral_made = None       # The referral level the agent chose (or None)
+        self.treatments_given = []      # Medicines administered during the episode
+        self.total_reward = 0.0         # Cumulative reward for the episode
 
     def _load_data(self):
+        """Load all static reference data from JSON files into memory."""
         with open(os.path.join(DATA_DIR, "diseases.json")) as f:
             self.diseases_db = {d["id"]: d for d in json.load(f)}
         with open(os.path.join(DATA_DIR, "symptoms.json")) as f:
@@ -48,6 +89,16 @@ class AshaEnv:
             self.villages = json.load(f)
 
     def reset(self, task_id: str = "medium_consultation") -> dict:
+        """
+        Start a new episode. Generates a fresh patient and returns the initial observation.
+
+        Args:
+            task_id: One of "easy_diagnosis", "medium_consultation", "hard_complex_case".
+                     Controls which diseases can appear, max steps, difficulty, etc.
+
+        Returns:
+            observation dict visible to the agent (patient info, available actions, etc.).
+        """
         task_cls = TASK_MAP.get(task_id)
         if task_cls is None:
             raise ValueError(f"Unknown task_id: {task_id}. Valid: {list(TASK_MAP.keys())}")
@@ -80,6 +131,20 @@ class AshaEnv:
         return self._build_observation()
 
     def step(self, action: str) -> tuple[dict, float, bool, dict]:
+        """
+        Execute one action and advance the episode.
+
+        Args:
+            action: A string like "ask_symptom:pallor", "diagnose:severe_anaemia",
+                    "treat:ifa_tablets", "refer:phc", "order_test:bp_monitor", etc.
+
+        Returns:
+            (observation, reward, done, info) tuple — standard RL env interface.
+            - observation: updated patient/context dict visible to the agent.
+            - reward: float reward for this action (can be negative).
+            - done: True if episode has ended (max steps reached or terminal action).
+            - info: dict with message, validity flag, step count, cumulative reward.
+        """
         if self.done:
             return self._build_observation(), 0.0, True, {"message": "Episode already ended."}
 
@@ -124,6 +189,11 @@ class AshaEnv:
         return self._build_observation(), round(reward, 3), self.done, info
 
     def get_state(self) -> dict:
+        """
+        Return the full ground-truth state of the episode (for grading/evaluation).
+        Unlike _build_observation(), this exposes hidden info like the true diagnosis,
+        all true symptoms, comorbidities, and the complete patient dict.
+        """
         return {
             "episode_id": self.episode_id,
             "true_diagnosis": self.patient["true_diagnosis"] if self.patient else None,
@@ -141,6 +211,7 @@ class AshaEnv:
         }
 
     def _process_action(self, action_type: str, action_value: str) -> float:
+        """Route a parsed action to the appropriate handler and return reward."""
         if action_type == "ask_symptom":
             return self._ask_symptom(action_value)
         elif action_type == "ask_history":
@@ -156,6 +227,13 @@ class AshaEnv:
         return -0.1
 
     def _ask_symptom(self, symptom_id: str) -> float:
+        """
+        Ask the patient about a specific symptom.
+        - On hard difficulty, the patient may be non-compliant (give unreliable answers).
+        - Finding a true symptom rewards proportionally to that symptom's specificity.
+        - Asking about a symptom the patient doesn't have gives a small +0.01
+          (negative findings are still useful clinically).
+        """
         self.asked_symptoms.append(symptom_id)
 
         # Non-compliance: patient may not answer truthfully on hard
@@ -176,6 +254,10 @@ class AshaEnv:
             return 0.01
 
     def _ask_history(self, history_item: str) -> float:
+        """
+        Ask about a patient's medical/social history item (e.g., "poor_diet", "home_delivery").
+        Returns +0.05 if the item is present in the patient's history, +0.01 otherwise.
+        """
         self.asked_history.append(history_item)
 
         if history_item in self.patient["history"]:
@@ -185,17 +267,22 @@ class AshaEnv:
         return 0.01
 
     def _order_test(self, test_id: str) -> float:
+        """
+        Order a point-of-care test from the ASHA kit (e.g., bp_monitor, thermometer).
+        Rewards +0.10 if the test is clinically relevant for the patient's true disease,
+        otherwise penalizes -0.02 for an unnecessary test. Also adjusts patient trust.
+        """
         self.ordered_tests.append(test_id)
         disease = self.patient["disease_data"]
         true_diag = self.patient["true_diagnosis"]
 
-        # Simulate test results
+        # Maps each test to the diseases it is clinically useful for
         test_relevance = {
-            "malaria_rdt": ["malaria"],
-            "haemoglobin_strip": ["anaemia", "malnutrition"],
-            "urine_dipstick": ["diabetes", "pre_eclampsia"],
-            "bp_monitor": ["hypertension", "pre_eclampsia"],
-            "thermometer": ["malaria", "dengue", "typhoid", "pneumonia", "ari", "chickenpox"],
+            "bp_monitor": ["pre_eclampsia", "eclampsia", "postpartum_haemorrhage", "antepartum_haemorrhage"],
+            "thermometer": ["puerperal_sepsis", "neonatal_sepsis", "hypothermia_newborn"],
+            "haemoglobin_strip": ["severe_anaemia", "postpartum_haemorrhage"],
+            "urine_dipstick": ["gestational_diabetes", "pre_eclampsia", "puerperal_sepsis"],
+            "weighing_scale": ["low_birth_weight", "hyperemesis", "neonatal_jaundice"],
         }
 
         relevant_diseases = test_relevance.get(test_id, [])
@@ -208,6 +295,15 @@ class AshaEnv:
             return -0.02
 
     def _diagnose(self, disease_id: str) -> float:
+        """
+        Make a final diagnosis. This is a TERMINAL action — ends the episode.
+
+        Scoring:
+          +1.0  exact correct diagnosis
+          +0.3  wrong disease but same category (e.g., both maternal)
+          -1.0  missed an emergency condition (dangerous!)
+          -0.3  wrong diagnosis otherwise
+        """
         self.diagnosis_made = disease_id
         true_diag = self.patient["true_diagnosis"]
         true_disease = self.diseases_db[true_diag]
@@ -225,6 +321,12 @@ class AshaEnv:
             return -0.3
 
     def _treat(self, medicine_id: str) -> float:
+        """
+        Administer a medicine from the ASHA kit.
+          +0.2  correct treatment for the disease
+          -0.1  wrong medicine but at least it's in the kit
+          -0.2  medicine not even in the kit (completely invalid)
+        """
         self.treatments_given.append(medicine_id)
         disease = self.patient["disease_data"]
 
@@ -236,6 +338,17 @@ class AshaEnv:
         return -0.2
 
     def _refer(self, level: str) -> float:
+        """
+        Refer the patient to a higher facility. This is a TERMINAL action.
+
+        Levels (lowest → highest): none → phc → district_hospital → emergency.
+
+        Scoring:
+          +0.8  correct referral level
+          +0.3  over-referred (safe but wastes resources)
+          -0.3  under-referred
+          -1.0  under-referred AND the disease is an emergency (life-threatening mistake)
+        """
         self.referral_made = level
         disease = self.patient["disease_data"]
         correct_level = disease["referral_level"]
@@ -255,6 +368,17 @@ class AshaEnv:
             return -0.3
 
     def _build_observation(self) -> dict:
+        """
+        Build the observation dict that the agent sees each step.
+
+        Contains only information the ASHA worker would realistically know:
+        - Patient demographics, chief complaint, revealed symptoms, vitals
+        - Village context (season, outbreaks, water source)
+        - ASHA context (kit contents, steps taken, patient trust level)
+        - List of all currently available actions
+
+        Does NOT expose: true diagnosis, hidden symptoms, or disease data.
+        """
         if self.patient is None:
             return {}
 
@@ -294,6 +418,11 @@ class AshaEnv:
         }
 
     def _get_available_actions(self) -> list[str]:
+        """
+        Generate the full list of valid action strings the agent can take right now.
+        Actions already taken (symptoms asked, tests ordered) are excluded.
+        Includes: ask_symptom, ask_history, order_test, diagnose, treat, refer.
+        """
         if self.done:
             return []
 
@@ -308,17 +437,20 @@ class AshaEnv:
 
         # History items not yet asked
         all_history = [
-            "recent_travel", "mosquito_exposure", "previous_malaria",
-            "neighbourhood_cases", "contaminated_water", "street_food",
-            "tb_contact", "previous_tb", "overcrowded_living",
-            "poor_diet", "heavy_menstruation", "vegetarian_diet",
-            "smoking", "recent_cold", "no_handwashing",
-            "food_insecurity", "family_history_bp", "salt_heavy_diet",
-            "stress", "family_history_diabetes", "sedentary_lifestyle",
-            "obesity", "school_exposure", "no_vaccination",
-            "alcohol_use", "previous_hepatitis", "barefoot_walking",
-            "no_deworming", "poor_hygiene", "first_pregnancy",
-            "previous_pre_eclampsia", "cold_exposure", "smoking_in_household",
+            "poor_diet", "no_ifa_supplements", "multiple_pregnancies",
+            "vegetarian_diet", "first_pregnancy", "family_history_bp",
+            "previous_pre_eclampsia", "teen_pregnancy", "age_over_35",
+            "no_anc_visits", "previous_caesarean", "placenta_previa_history",
+            "smoking_in_household", "grand_multipara", "prolonged_labour_history",
+            "previous_pph", "anaemia_in_pregnancy", "home_delivery",
+            "premature_rupture_membranes", "no_clean_delivery_kit",
+            "family_history_diabetes", "previous_gdm", "obesity",
+            "previous_large_baby", "multiple_gestation", "previous_hyperemesis",
+            "previous_preterm", "cervical_incompetence", "uti_in_pregnancy",
+            "short_stature", "no_skilled_attendant", "premature_birth",
+            "maternal_fever_during_labour", "unclean_cord_care",
+            "blood_group_incompatibility", "breastfeeding_difficulty",
+            "low_birth_weight_history", "cold_environment",
         ]
         for h in all_history:
             if h not in self.asked_history:

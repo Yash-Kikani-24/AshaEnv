@@ -8,3 +8,9 @@ dist/
 build/
 .pytest_cache/
 venv/
+info.txt
+test.txt
+CLAUDE.md
+reward.md
+.claude
+sampleREADME.md

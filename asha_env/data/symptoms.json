@@ -1,52 +1,10 @@
 {
-  "fever": {
-    "id": "fever",
-    "name": "Fever",
-    "ask_text": "Do you have fever?",
-    "category": "general",
-    "specificity": 0.3
-  },
-  "chills": {
-    "id": "chills",
-    "name": "Chills",
-    "ask_text": "Are you experiencing chills or shivering?",
-    "category": "general",
-    "specificity": 0.5
-  },
-  "sweating": {
-    "id": "sweating",
-    "name": "Sweating",
-    "ask_text": "Do you have excessive sweating?",
-    "category": "general",
-    "specificity": 0.5
-  },
-  "headache": {
-    "id": "headache",
-    "name": "Headache",
-    "ask_text": "Do you have a headache?",
-    "category": "general",
-    "specificity": 0.2
-  },
-  "nausea": {
-    "id": "nausea",
-    "name": "Nausea",
-    "ask_text": "Are you feeling nauseous?",
-    "category": "gastrointestinal",
-    "specificity": 0.3
-  },
-  "vomiting": {
-    "id": "vomiting",
-    "name": "Vomiting",
-    "ask_text": "Have you been vomiting?",
-    "category": "gastrointestinal",
-    "specificity": 0.4
-  },
-  "joint_pain": {
-    "id": "joint_pain",
-    "name": "Joint Pain",
-    "ask_text": "Do you have pain in your joints?",
-    "category": "musculoskeletal",
-    "specificity": 0.5
+  "pallor": {
+    "id": "pallor",
+    "name": "Pallor",
+    "ask_text": "Does the patient look pale, especially in the nails and eyes?",
+    "category": "maternal",
+    "specificity": 0.6
   },
   "fatigue": {
     "id": "fatigue",
@@ -62,152 +20,159 @@
     "category": "general",
     "specificity": 0.2
   },
-  "rash": {
-    "id": "rash",
-    "name": "Rash",
-    "ask_text": "Do you have any rash or skin eruptions?",
-    "category": "dermatological",
-    "specificity": 0.6
-  },
-  "itching": {
-    "id": "itching",
-    "name": "Itching",
-    "ask_text": "Do you have itching on your body?",
-    "category": "dermatological",
-    "specificity": 0.5
-  },
-  "diarrhoea": {
-    "id": "diarrhoea",
-    "name": "Diarrhoea",
-    "ask_text": "Are you having loose or watery stools?",
-    "category": "gastrointestinal",
-    "specificity": 0.5
-  },
-  "abdominal_pain": {
-    "id": "abdominal_pain",
-    "name": "Abdominal Pain",
-    "ask_text": "Do you have pain in your stomach or abdomen?",
-    "category": "gastrointestinal",
-    "specificity": 0.4
-  },
-  "dehydration": {
-    "id": "dehydration",
-    "name": "Dehydration",
-    "ask_text": "Do you feel very thirsty or have a dry mouth?",
-    "category": "general",
-    "specificity": 0.4
-  },
-  "weight_loss": {
-    "id": "weight_loss",
-    "name": "Weight Loss",
-    "ask_text": "Have you lost weight recently without trying?",
-    "category": "general",
-    "specificity": 0.4
-  },
-  "loss_of_appetite": {
-    "id": "loss_of_appetite",
-    "name": "Loss of Appetite",
-    "ask_text": "Have you lost your appetite?",
+  "dizziness": {
+    "id": "dizziness",
+    "name": "Dizziness",
+    "ask_text": "Do you feel dizzy or lightheaded?",
     "category": "general",
     "specificity": 0.3
-  },
-  "cough": {
-    "id": "cough",
-    "name": "Cough",
-    "ask_text": "Do you have a cough?",
-    "category": "respiratory",
-    "specificity": 0.3
-  },
-  "persistent_cough": {
-    "id": "persistent_cough",
-    "name": "Persistent Cough",
-    "ask_text": "Have you had a cough lasting more than 2 weeks?",
-    "category": "respiratory",
-    "specificity": 0.7
-  },
-  "productive_cough": {
-    "id": "productive_cough",
-    "name": "Productive Cough",
-    "ask_text": "Are you coughing up phlegm or mucus?",
-    "category": "respiratory",
-    "specificity": 0.6
   },
   "shortness_of_breath": {
     "id": "shortness_of_breath",
     "name": "Shortness of Breath",
     "ask_text": "Do you have difficulty breathing?",
-    "category": "respiratory",
-    "specificity": 0.5
-  },
-  "rapid_breathing": {
-    "id": "rapid_breathing",
-    "name": "Rapid Breathing",
-    "ask_text": "Is the patient breathing faster than normal?",
-    "category": "respiratory",
-    "specificity": 0.6
-  },
-  "chest_pain": {
-    "id": "chest_pain",
-    "name": "Chest Pain",
-    "ask_text": "Do you have any pain in your chest?",
-    "category": "cardiovascular",
-    "specificity": 0.5
-  },
-  "night_sweats": {
-    "id": "night_sweats",
-    "name": "Night Sweats",
-    "ask_text": "Do you wake up drenched in sweat at night?",
     "category": "general",
-    "specificity": 0.7
-  },
-  "blood_in_sputum": {
-    "id": "blood_in_sputum",
-    "name": "Blood in Sputum",
-    "ask_text": "Have you noticed blood when you cough?",
-    "category": "respiratory",
-    "specificity": 0.9
-  },
-  "pallor": {
-    "id": "pallor",
-    "name": "Pallor",
-    "ask_text": "Does the patient look pale, especially in the nails and eyes?",
-    "category": "general",
-    "specificity": 0.6
-  },
-  "dizziness": {
-    "id": "dizziness",
-    "name": "Dizziness",
-    "ask_text": "Do you feel dizzy or lightheaded?",
-    "category": "neurological",
-    "specificity": 0.3
+    "specificity": 0.5
   },
   "brittle_nails": {
     "id": "brittle_nails",
     "name": "Brittle Nails",
     "ask_text": "Are your nails brittle or spoon-shaped?",
-    "category": "dermatological",
+    "category": "maternal",
     "specificity": 0.8
+  },
+  "rapid_heartbeat": {
+    "id": "rapid_heartbeat",
+    "name": "Rapid Heartbeat",
+    "ask_text": "Is the heart beating very fast?",
+    "category": "general",
+    "specificity": 0.4
   },
   "high_bp": {
     "id": "high_bp",
     "name": "High Blood Pressure",
     "ask_text": "Is the blood pressure reading high?",
-    "category": "cardiovascular",
+    "category": "maternal",
     "specificity": 0.7
+  },
+  "swelling_face_hands": {
+    "id": "swelling_face_hands",
+    "name": "Swelling of Face/Hands",
+    "ask_text": "Do you have swelling in your face, hands, or feet?",
+    "category": "maternal",
+    "specificity": 0.6
+  },
+  "severe_headache": {
+    "id": "severe_headache",
+    "name": "Severe Headache",
+    "ask_text": "Do you have a severe headache that won't go away?",
+    "category": "maternal",
+    "specificity": 0.5
   },
   "blurred_vision": {
     "id": "blurred_vision",
     "name": "Blurred Vision",
-    "ask_text": "Is your vision blurry?",
-    "category": "neurological",
+    "ask_text": "Is your vision blurry or are you seeing spots?",
+    "category": "maternal",
+    "specificity": 0.6
+  },
+  "upper_abdominal_pain": {
+    "id": "upper_abdominal_pain",
+    "name": "Upper Abdominal Pain",
+    "ask_text": "Do you have pain in the upper part of your abdomen, below the ribs?",
+    "category": "maternal",
+    "specificity": 0.6
+  },
+  "nausea": {
+    "id": "nausea",
+    "name": "Nausea",
+    "ask_text": "Are you feeling nauseous?",
+    "category": "general",
+    "specificity": 0.2
+  },
+  "rapid_weight_gain": {
+    "id": "rapid_weight_gain",
+    "name": "Rapid Weight Gain",
+    "ask_text": "Have you gained weight suddenly in the last few days?",
+    "category": "maternal",
+    "specificity": 0.7
+  },
+  "convulsions": {
+    "id": "convulsions",
+    "name": "Convulsions/Seizures",
+    "ask_text": "Has the patient had fits or convulsions?",
+    "category": "maternal",
+    "specificity": 0.9
+  },
+  "unconsciousness": {
+    "id": "unconsciousness",
+    "name": "Unconsciousness",
+    "ask_text": "Is the patient unconscious or unresponsive?",
+    "category": "general",
+    "specificity": 0.8
+  },
+  "vaginal_bleeding": {
+    "id": "vaginal_bleeding",
+    "name": "Vaginal Bleeding",
+    "ask_text": "Is there any vaginal bleeding?",
+    "category": "maternal",
+    "specificity": 0.8
+  },
+  "abdominal_pain": {
+    "id": "abdominal_pain",
+    "name": "Abdominal Pain",
+    "ask_text": "Do you have pain in your abdomen?",
+    "category": "general",
+    "specificity": 0.3
+  },
+  "cold_clammy_skin": {
+    "id": "cold_clammy_skin",
+    "name": "Cold Clammy Skin",
+    "ask_text": "Is the skin cold and clammy to touch?",
+    "category": "general",
+    "specificity": 0.7
+  },
+  "fever": {
+    "id": "fever",
+    "name": "Fever",
+    "ask_text": "Do you have fever?",
+    "category": "general",
+    "specificity": 0.3
+  },
+  "chills": {
+    "id": "chills",
+    "name": "Chills",
+    "ask_text": "Are you experiencing chills or shivering?",
+    "category": "general",
+    "specificity": 0.4
+  },
+  "foul_smelling_discharge": {
+    "id": "foul_smelling_discharge",
+    "name": "Foul-smelling Vaginal Discharge",
+    "ask_text": "Is there a foul-smelling discharge from the vagina?",
+    "category": "maternal",
+    "specificity": 0.9
+  },
+  "lower_abdominal_pain": {
+    "id": "lower_abdominal_pain",
+    "name": "Lower Abdominal Pain",
+    "ask_text": "Do you have pain in the lower part of your abdomen?",
+    "category": "maternal",
     "specificity": 0.5
+  },
+  "tender_uterus": {
+    "id": "tender_uterus",
+    "name": "Tender Uterus",
+    "ask_text": "Is the uterus tender or painful when touched?",
+    "category": "maternal",
+    "specificity": 0.8
   },
   "frequent_urination": {
     "id": "frequent_urination",
     "name": "Frequent Urination",
     "ask_text": "Are you urinating more often than usual?",
-    "category": "urological",
-    "specificity": 0.7
+    "category": "maternal",
+    "specificity": 0.5
   },
   "excessive_thirst": {
     "id": "excessive_thirst",
@@ -216,109 +181,263 @@
     "category": "general",
     "specificity": 0.6
   },
-  "slow_healing": {
-    "id": "slow_healing",
-    "name": "Slow Healing",
-    "ask_text": "Do your wounds take a long time to heal?",
-    "category": "general",
-    "specificity": 0.7
-  },
-  "numbness": {
-    "id": "numbness",
-    "name": "Numbness",
-    "ask_text": "Do you feel numbness or tingling in hands or feet?",
-    "category": "neurological",
+  "recurrent_infections": {
+    "id": "recurrent_infections",
+    "name": "Recurrent Infections",
+    "ask_text": "Have you been getting frequent infections like UTIs?",
+    "category": "maternal",
     "specificity": 0.6
   },
-  "jaundice": {
-    "id": "jaundice",
-    "name": "Jaundice",
-    "ask_text": "Are your eyes or skin looking yellow?",
-    "category": "gastrointestinal",
+  "excessive_vomiting": {
+    "id": "excessive_vomiting",
+    "name": "Excessive Vomiting",
+    "ask_text": "Are you vomiting many times a day and unable to keep food down?",
+    "category": "maternal",
+    "specificity": 0.7
+  },
+  "dehydration": {
+    "id": "dehydration",
+    "name": "Dehydration",
+    "ask_text": "Do you feel very thirsty with dry mouth and reduced urine?",
+    "category": "general",
+    "specificity": 0.5
+  },
+  "weight_loss": {
+    "id": "weight_loss",
+    "name": "Weight Loss",
+    "ask_text": "Have you lost weight during pregnancy?",
+    "category": "maternal",
+    "specificity": 0.6
+  },
+  "inability_to_eat": {
+    "id": "inability_to_eat",
+    "name": "Inability to Eat",
+    "ask_text": "Are you unable to eat or drink anything?",
+    "category": "maternal",
+    "specificity": 0.7
+  },
+  "contractions_before_37wks": {
+    "id": "contractions_before_37wks",
+    "name": "Premature Contractions",
+    "ask_text": "Are you having regular contractions before 37 weeks?",
+    "category": "maternal",
     "specificity": 0.9
   },
-  "dark_urine": {
-    "id": "dark_urine",
-    "name": "Dark Urine",
-    "ask_text": "Is your urine darker than usual?",
-    "category": "urological",
+  "lower_back_pain": {
+    "id": "lower_back_pain",
+    "name": "Lower Back Pain",
+    "ask_text": "Do you have a constant dull pain in your lower back?",
+    "category": "maternal",
+    "specificity": 0.4
+  },
+  "pelvic_pressure": {
+    "id": "pelvic_pressure",
+    "name": "Pelvic Pressure",
+    "ask_text": "Do you feel heavy pressure in the pelvis?",
+    "category": "maternal",
     "specificity": 0.6
   },
-  "constipation": {
-    "id": "constipation",
-    "name": "Constipation",
-    "ask_text": "Are you having trouble passing stools?",
-    "category": "gastrointestinal",
-    "specificity": 0.4
-  },
-  "swelling": {
-    "id": "swelling",
-    "name": "Swelling",
-    "ask_text": "Do you have swelling in your hands, feet, or face?",
-    "category": "general",
-    "specificity": 0.5
-  },
-  "rapid_weight_gain": {
-    "id": "rapid_weight_gain",
-    "name": "Rapid Weight Gain",
-    "ask_text": "Have you gained weight suddenly?",
-    "category": "general",
-    "specificity": 0.7
-  },
-  "bleeding_gums": {
-    "id": "bleeding_gums",
-    "name": "Bleeding Gums",
-    "ask_text": "Are your gums bleeding?",
-    "category": "general",
-    "specificity": 0.7
-  },
-  "sore_throat": {
-    "id": "sore_throat",
-    "name": "Sore Throat",
-    "ask_text": "Do you have a sore throat?",
-    "category": "respiratory",
-    "specificity": 0.4
-  },
-  "runny_nose": {
-    "id": "runny_nose",
-    "name": "Runny Nose",
-    "ask_text": "Do you have a runny or blocked nose?",
-    "category": "respiratory",
-    "specificity": 0.4
-  },
-  "sneezing": {
-    "id": "sneezing",
-    "name": "Sneezing",
-    "ask_text": "Are you sneezing frequently?",
-    "category": "respiratory",
-    "specificity": 0.3
-  },
-  "itching_anus": {
-    "id": "itching_anus",
-    "name": "Anal Itching",
-    "ask_text": "Do you have itching around the anus, especially at night?",
-    "category": "gastrointestinal",
+  "leaking_fluid": {
+    "id": "leaking_fluid",
+    "name": "Leaking Fluid",
+    "ask_text": "Is there fluid leaking from the vagina?",
+    "category": "maternal",
     "specificity": 0.8
   },
-  "visible_worms": {
-    "id": "visible_worms",
-    "name": "Visible Worms",
-    "ask_text": "Have you seen worms in your stool?",
-    "category": "gastrointestinal",
-    "specificity": 1.0
+  "abdominal_cramps": {
+    "id": "abdominal_cramps",
+    "name": "Abdominal Cramps",
+    "ask_text": "Are you having cramping in your abdomen?",
+    "category": "maternal",
+    "specificity": 0.4
   },
-  "hair_changes": {
-    "id": "hair_changes",
-    "name": "Hair Changes",
-    "ask_text": "Has your hair become thin, dry, or discolored?",
-    "category": "dermatological",
+  "prolonged_labour": {
+    "id": "prolonged_labour",
+    "name": "Prolonged Labour",
+    "ask_text": "Has labour been going on for more than 12 hours?",
+    "category": "maternal",
+    "specificity": 0.9
+  },
+  "severe_abdominal_pain": {
+    "id": "severe_abdominal_pain",
+    "name": "Severe Abdominal Pain",
+    "ask_text": "Is the abdominal pain very severe and constant?",
+    "category": "maternal",
     "specificity": 0.6
   },
-  "skin_changes": {
-    "id": "skin_changes",
-    "name": "Skin Changes",
-    "ask_text": "Do you have dry, flaky, or discolored skin?",
-    "category": "dermatological",
+  "maternal_distress": {
+    "id": "maternal_distress",
+    "name": "Maternal Distress",
+    "ask_text": "Is the mother exhausted, distressed, or unable to push?",
+    "category": "maternal",
+    "specificity": 0.8
+  },
+  "swollen_vulva": {
+    "id": "swollen_vulva",
+    "name": "Swollen Vulva",
+    "ask_text": "Is the vulva swollen?",
+    "category": "maternal",
+    "specificity": 0.7
+  },
+  "reduced_fetal_movement": {
+    "id": "reduced_fetal_movement",
+    "name": "Reduced Fetal Movement",
+    "ask_text": "Has the baby been moving less than usual?",
+    "category": "maternal",
+    "specificity": 0.7
+  },
+  "not_breathing": {
+    "id": "not_breathing",
+    "name": "Not Breathing",
+    "ask_text": "Is the newborn not breathing or gasping?",
+    "category": "newborn",
+    "specificity": 0.9
+  },
+  "not_crying": {
+    "id": "not_crying",
+    "name": "Not Crying",
+    "ask_text": "Did the baby not cry at birth?",
+    "category": "newborn",
+    "specificity": 0.8
+  },
+  "blue_skin": {
+    "id": "blue_skin",
+    "name": "Blue Skin Color",
+    "ask_text": "Is the baby's skin blue or dusky?",
+    "category": "newborn",
+    "specificity": 0.9
+  },
+  "limp_body": {
+    "id": "limp_body",
+    "name": "Limp/Floppy Body",
+    "ask_text": "Is the baby limp and floppy?",
+    "category": "newborn",
+    "specificity": 0.8
+  },
+  "weak_cry": {
+    "id": "weak_cry",
+    "name": "Weak Cry",
+    "ask_text": "Is the baby's cry weak or absent?",
+    "category": "newborn",
+    "specificity": 0.6
+  },
+  "slow_heartbeat_newborn": {
+    "id": "slow_heartbeat_newborn",
+    "name": "Slow Heartbeat (Newborn)",
+    "ask_text": "Is the baby's heartbeat slow or hard to feel?",
+    "category": "newborn",
+    "specificity": 0.8
+  },
+  "fever_newborn": {
+    "id": "fever_newborn",
+    "name": "Fever (Newborn)",
+    "ask_text": "Does the baby feel hot to touch or have fever?",
+    "category": "newborn",
     "specificity": 0.5
+  },
+  "poor_feeding": {
+    "id": "poor_feeding",
+    "name": "Poor Feeding",
+    "ask_text": "Is the baby refusing to feed or feeding poorly?",
+    "category": "newborn",
+    "specificity": 0.4
+  },
+  "lethargy_newborn": {
+    "id": "lethargy_newborn",
+    "name": "Lethargy (Newborn)",
+    "ask_text": "Is the baby unusually sleepy or not responding?",
+    "category": "newborn",
+    "specificity": 0.5
+  },
+  "fast_breathing_newborn": {
+    "id": "fast_breathing_newborn",
+    "name": "Fast Breathing (Newborn)",
+    "ask_text": "Is the baby breathing very fast (more than 60 breaths per minute)?",
+    "category": "newborn",
+    "specificity": 0.7
+  },
+  "umbilical_redness": {
+    "id": "umbilical_redness",
+    "name": "Umbilical Redness",
+    "ask_text": "Is there redness or swelling around the umbilical cord stump?",
+    "category": "newborn",
+    "specificity": 0.8
+  },
+  "umbilical_pus": {
+    "id": "umbilical_pus",
+    "name": "Umbilical Pus",
+    "ask_text": "Is there pus or discharge from the umbilical cord stump?",
+    "category": "newborn",
+    "specificity": 0.9
+  },
+  "skin_pustules": {
+    "id": "skin_pustules",
+    "name": "Skin Pustules",
+    "ask_text": "Does the baby have boils or pus-filled bumps on the skin?",
+    "category": "newborn",
+    "specificity": 0.7
+  },
+  "bulging_fontanelle": {
+    "id": "bulging_fontanelle",
+    "name": "Bulging Fontanelle",
+    "ask_text": "Is the soft spot on the baby's head bulging?",
+    "category": "newborn",
+    "specificity": 0.9
+  },
+  "yellow_skin": {
+    "id": "yellow_skin",
+    "name": "Yellow Skin",
+    "ask_text": "Is the baby's skin looking yellow?",
+    "category": "newborn",
+    "specificity": 0.8
+  },
+  "yellow_eyes": {
+    "id": "yellow_eyes",
+    "name": "Yellow Eyes",
+    "ask_text": "Are the baby's eyes looking yellow?",
+    "category": "newborn",
+    "specificity": 0.9
+  },
+  "dark_urine_newborn": {
+    "id": "dark_urine_newborn",
+    "name": "Dark Urine (Newborn)",
+    "ask_text": "Is the baby's urine dark-colored?",
+    "category": "newborn",
+    "specificity": 0.7
+  },
+  "low_weight": {
+    "id": "low_weight",
+    "name": "Low Birth Weight",
+    "ask_text": "Does the baby weigh less than 2.5 kg?",
+    "category": "newborn",
+    "specificity": 0.9
+  },
+  "difficulty_sucking": {
+    "id": "difficulty_sucking",
+    "name": "Difficulty Sucking",
+    "ask_text": "Is the baby having trouble latching or sucking?",
+    "category": "newborn",
+    "specificity": 0.6
+  },
+  "hypothermia_sign": {
+    "id": "hypothermia_sign",
+    "name": "Cold Body Temperature",
+    "ask_text": "Does the baby feel cold to touch?",
+    "category": "newborn",
+    "specificity": 0.7
+  },
+  "cold_extremities": {
+    "id": "cold_extremities",
+    "name": "Cold Hands/Feet",
+    "ask_text": "Are the baby's hands and feet cold?",
+    "category": "newborn",
+    "specificity": 0.6
+  },
+  "chest_indrawing": {
+    "id": "chest_indrawing",
+    "name": "Chest Indrawing",
+    "ask_text": "Is the baby's chest pulling inward when breathing?",
+    "category": "newborn",
+    "specificity": 0.8
   }
 }
