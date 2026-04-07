@@ -36,7 +36,9 @@ import os
 import re
 import sys
 import json
+from typing import List, Optional
 import httpx
+from openai import OpenAI
 
 # ---------------------------------------------------------------------------
 # Configuration — all values can be overridden via environment variables.
@@ -46,10 +48,16 @@ import httpx
 API_BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:7860")
 
 # API key for the LLM. Checks HF_TOKEN first, then API_KEY as a fallback alias.
-HF_TOKEN = os.environ.get("HF_TOKEN", os.environ.get("API_KEY", ""))
+HF_TOKEN = os.environ.get("HF_TOKEN")
 
 # Which LLM model to use. Default is Llama-3 8B via HuggingFace Inference API.
 MODEL_NAME = os.environ.get("MODEL_NAME", "meta-llama/Meta-Llama-3-8B-Instruct")
+
+# Benchmark identifier used in [START] log lines.
+BENCHMARK = "asha-env"
+
+# Episodes with a score >= this threshold are counted as successful.
+SUCCESS_THRESHOLD = 0.5
 
 # System prompt that sets up the LLM's role as an ASHA worker.
 # Key constraints communicated to the LLM:
@@ -77,6 +85,21 @@ TASKS = ["easy_diagnosis", "medium_consultation", "hard_complex_case"]
 # Number of episodes to run per task. 5 gives a reasonable average without
 # taking too long during platform evaluation.
 EPISODES_PER_TASK = 5
+
+
+def log_start(task: str, env: str, model: str) -> None:
+    print(f"[START] task={task} env={env} model={model}", flush=True)
+
+
+def log_step(step: int, action: str, reward: float, done: bool, error: Optional[str]) -> None:
+    error_val = error if error else "null"
+    done_val = str(done).lower()
+    print(f"[STEP] step={step} action={action} reward={reward:.2f} done={done_val} error={error_val}", flush=True)
+
+
+def log_end(success: bool, steps: int, score: float, rewards: List[float]) -> None:
+    rewards_str = ",".join(f"{r:.2f}" for r in rewards)
+    print(f"[END] success={str(success).lower()} steps={steps} score={score:.3f} rewards={rewards_str}", flush=True)
 
 
 def parse_action(raw_text: str, available_actions: list[str]) -> str:
@@ -167,22 +190,17 @@ def call_llm(messages: list[dict]) -> str:
         The LLM's reply as a plain string, or "" if the API call failed.
     """
     try:
-        # Default to OpenAI's endpoint; override with LLM_API_URL for other providers.
-        api_url = os.environ.get("LLM_API_URL", "https://api.openai.com/v1/chat/completions")
-        headers = {
-            "Authorization": f"Bearer {HF_TOKEN}",
-            "Content-Type": "application/json",
-        }
-        payload = {
-            "model": MODEL_NAME,
-            "messages": messages,
-            "max_tokens": 100,   # Actions are short — no need for more tokens.
-            "temperature": 0.3,  # Low temperature = more consistent action selection.
-        }
-        with httpx.Client(timeout=30.0) as client:
-            resp = client.post(api_url, json=payload, headers=headers)
-            resp.raise_for_status()
-            return resp.json()["choices"][0]["message"]["content"]
+        client = OpenAI(
+            base_url=os.environ.get("LLM_API_URL", "https://api.openai.com/v1"),
+            api_key=HF_TOKEN,
+        )
+        resp = client.chat.completions.create(
+            model=MODEL_NAME,
+            messages=messages,
+            max_tokens=100,   # Actions are short — no need for more tokens.
+            temperature=0.3,  # Low temperature = more consistent action selection.
+        )
+        return resp.choices[0].message.content
     except Exception as e:
         print(f"  LLM call failed: {e}")
         return ""  # Return empty string; parse_action will fall back to first available action.
@@ -220,8 +238,11 @@ def run_episode(task_id: str, use_llm: bool = True) -> dict:
         # are appended each step so the LLM remembers what it already asked.
         messages = [{"role": "system", "content": SYSTEM_PROMPT}]
         total_reward = 0.0
+        step_rewards: List[float] = []
         steps = 0
         done = False
+
+        log_start(task=task_id, env=BENCHMARK, model=MODEL_NAME)
 
         while not done:
             available = obs.get("available_actions", [])
@@ -253,10 +274,16 @@ def run_episode(task_id: str, use_llm: bool = True) -> dict:
             obs = step_data["observation"]
             reward = step_data["reward"]
             done = step_data["done"]
+            error = step_data.get("error")
             total_reward += reward
+            step_rewards.append(reward)
             steps += 1
 
-            print(f"    Step {steps}: {action} -> reward={reward:.3f}")
+            log_step(step=steps, action=action, reward=reward, done=done, error=error)
+
+        score = min(max(total_reward, 0.0), 1.0)
+        success = score >= SUCCESS_THRESHOLD
+        log_end(success=success, steps=steps, score=score, rewards=step_rewards)
 
         # --- Fetch ground-truth after episode ends ---
         # /state exposes hidden fields (true_diagnosis, true_symptoms) used
