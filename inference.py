@@ -14,22 +14,22 @@ HOW IT WORKS:
     6. Prints a per-task and overall results table.
 
 FALLBACK MODE:
-    If HF_TOKEN or MODEL_NAME are not set (or MODEL_NAME="test"), the script runs
+    If API_KEY or MODEL_NAME are not set (or MODEL_NAME="test"), the script runs
     without an LLM — it just picks the first available action each step. This is
     useful for smoke-testing the server connection without needing API credentials.
 
 REQUIRED ENVIRONMENT VARIABLES:
-    API_BASE_URL  — URL of the environment server (default: http://localhost:7860)
-    HF_TOKEN      — API key for the LLM provider (HuggingFace or OpenAI-compatible)
+    ENV_BASE_URL  — URL of the ASHA environment server (default: http://localhost:7860)
+    API_BASE_URL  — LLM endpoint URL (default: https://router.huggingface.co/v1)
+    HF_TOKEN      — API key for the LLM provider (also checked as API_KEY)
     MODEL_NAME    — model identifier, e.g. "meta-llama/Meta-Llama-3-8B-Instruct"
-    LLM_API_URL   — (optional) LLM endpoint URL (default: OpenAI chat completions)
 
 HOW TO RUN LOCALLY:
     # Start the server first:
     uvicorn server.app:app --host 0.0.0.0 --port 7860
 
     # Then in a separate terminal:
-    API_BASE_URL=http://localhost:7860 HF_TOKEN=<key> MODEL_NAME=<model> python inference.py
+    ENV_BASE_URL=http://localhost:7860 HF_TOKEN=<key> MODEL_NAME=<model> python inference.py
 """
 
 import os
@@ -45,10 +45,13 @@ from openai import OpenAI
 # ---------------------------------------------------------------------------
 
 # Base URL of the running ASHA environment server.
-API_BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:7860")
+ENV_BASE_URL = os.environ.get("ENV_BASE_URL", "http://localhost:7860")
+
+# LLM endpoint URL — matches the API_BASE_URL convention from the sample inference script.
+API_BASE_URL = os.getenv("API_BASE_URL") or "https://router.huggingface.co/v1"
 
 # API key for the LLM. Checks HF_TOKEN first, then API_KEY as a fallback alias.
-HF_TOKEN = os.environ.get("HF_TOKEN")
+API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY")
 
 # Which LLM model to use. Default is Llama-3 8B via HuggingFace Inference API.
 MODEL_NAME = os.environ.get("MODEL_NAME", "meta-llama/Meta-Llama-3-8B-Instruct")
@@ -174,9 +177,8 @@ def call_llm(messages: list[dict]) -> str:
     """
     Send the conversation history to the LLM and return its reply text.
 
-    Uses an OpenAI-compatible chat completions endpoint. The LLM_API_URL environment
-    variable can point this at HuggingFace Inference API, vLLM, or any other
-    OpenAI-compatible server.
+    Uses an OpenAI-compatible chat completions endpoint. API_BASE_URL points this
+    at HuggingFace Inference API, vLLM, or any other OpenAI-compatible server.
 
     Settings:
         max_tokens=100  — actions are short strings; no need for longer responses.
@@ -191,8 +193,8 @@ def call_llm(messages: list[dict]) -> str:
     """
     try:
         client = OpenAI(
-            base_url=os.environ.get("LLM_API_URL", "https://api.openai.com/v1"),
-            api_key=HF_TOKEN,
+            base_url=API_BASE_URL,
+            api_key=API_KEY,
         )
         resp = client.chat.completions.create(
             model=MODEL_NAME,
@@ -227,7 +229,7 @@ def run_episode(task_id: str, use_llm: bool = True) -> dict:
         Dict with: task_id, episode_id, steps taken, total_reward, true_diagnosis,
         diagnosis_made, referral_made.
     """
-    with httpx.Client(base_url=API_BASE_URL, timeout=30.0) as client:
+    with httpx.Client(base_url=ENV_BASE_URL, timeout=30.0) as client:
         # --- Start a new episode ---
         resp = client.post("/reset", json={"task_id": task_id})
         resp.raise_for_status()
@@ -313,10 +315,10 @@ def main():
     Exits with code 1 if the overall average score is exactly 0 — this most
     likely means the environment server is not reachable or is broken.
     """
-    # LLM mode requires both a token and a non-test model name.
-    use_llm = HF_TOKEN and MODEL_NAME and MODEL_NAME != "test"
+    # LLM mode requires both a key and a non-test model name.
+    use_llm = API_KEY and MODEL_NAME and MODEL_NAME != "test"
     if not use_llm:
-        print("No LLM configured (HF_TOKEN/MODEL_NAME missing or MODEL_NAME=test).")
+        print("No LLM configured (HF_TOKEN/API_KEY missing or MODEL_NAME=test).")
         print("Running in fallback mode (first available action).\n")
 
     results = {}    # results[task_id] = list of total_reward floats
